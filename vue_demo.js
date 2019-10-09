@@ -23,10 +23,13 @@ var app = new Vue({
 						<div class="container">
 						<div class="row">
 						<div class="col-2">
-							<a v-bind:href="base_url + '/blog/' + blog.slug_name"><img v-bind:src="base_url + '/static/images/random.png'" class="img-thumbnail img-fluid rounded float-left" style="margin-right: 1em;" alt="topic image"></a>
+							<a v-bind:href="base_url + '/blog/' + blog.slug_name">
+							<img v-bind:src="base_url + '/static/images/' + getImage(blog.tags)" class="img-thumbnail img-fluid rounded float-left" style="margin-right: 1em;" alt="topic image"></a>
 						</div><!--/col-2-->
 						<div class="col-10">
-							<h5 class="card-title"><a v-bind:href="base_url + '/blog/' + blog.slug_name">{{ blog.title }}</a> {{ prettyDate(blog.pub_date) }}</h5> 
+							<h5 class="card-title">
+							<a v-bind:href="base_url + '/blog/' + blog.slug_name">{{ blog.title }}</a> 
+							{{ prettyDate(blog.pub_date) }}</h5> 
 							<p class="card-text"><span v-html="blog.body.slice(0,100)"></span> .....</p>	
 						</div><!--/col-10-->
 						</div><!--/row-->
@@ -60,6 +63,29 @@ var app = new Vue({
 				case '11': return 'Nov';
 				case '12': return 'Dec';
 				default: return 'not a valid month';
+			}
+		},
+		getImage: function(tags) {
+			if (tags.includes('software engineering') || tags.includes('algorithms')) {
+				return 'cs_bg.jpg';
+			}
+			else if(tags.includes('cpp')){
+				return 'cpp_logo.png';			
+			}
+			else if(tags.includes('python')){
+				return 'python.png';			
+			}
+			else if(tags.includes('javascript')){
+				return 'js.png';			
+			}
+			else if(tags.includes('book') || tags.includes('books')){
+				return 'book.png';			
+			}
+			else if(tags.includes('cpp')){
+				return 'cpp_logo.png';			
+			} 
+			else {
+				return 'random.png';
 			}
 		}
 	}
