@@ -1,7 +1,7 @@
 var app = new Vue({
 	el: '#app',
 	data: {
-		base_url: 'http://www.thefifthmoon.xyz',
+		base_url: 'https://thefifthmoon.herokuapp.com',
 		blogs: []
 	},
 	mounted() {
