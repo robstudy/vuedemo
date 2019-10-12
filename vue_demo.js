@@ -89,6 +89,7 @@ var app = new Vue({
 					app.filtered_blogs.push(blog);
 				}
 			});
+			this.inputs.text = '';
 			this.display_post = false;
 		}
 	}
