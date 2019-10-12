@@ -3,8 +3,12 @@ var app = new Vue({
 	data: {
 		base_url: 'https://thefifthmoon.herokuapp.com',
 		blogs: [],
+		filtered_blogs: [],
 		loaded_blog: {},
-		display_post: false
+		display_post: false,
+		inputs: {
+			text: ''
+		}
 	},
 	mounted() {
 		axios
@@ -14,10 +18,14 @@ var app = new Vue({
 					app.blogs.push(item.fields);
 				});
 			});
+
+		this.filtered_blogs = this.blogs;
 	},
 	methods: {
 		load_blog: function(index) {
 			this.loaded_blog = this.blogs[index];
+			this.filtered_blogs = this.blogs;
+			this.inputs.text = '';
 			this.display_post = true;
 		},
 		prettyDate: function(time_string) {
@@ -64,6 +72,24 @@ var app = new Vue({
 			else {
 				return 'random.png';
 			}
+		},
+		search: function() {
+			this.filtered_blogs = [];
+			this.blogs.forEach(function(blog){
+				if (blog.title.toLowerCase().includes(app.inputs.text.toLowerCase())|| 
+					blog.tags.toLowerCase().includes(app.inputs.text.toLowerCase())) {
+					app.filtered_blogs.push(blog);
+				}
+			});
+		},
+		loadtag: function(tag) {
+			this.filtered_blogs = [];
+			this.blogs.forEach(function(blog){
+				if (blog.tags.toLowerCase().includes(tag)) {
+					app.filtered_blogs.push(blog);
+				}
+			});
+			this.display_post = false;
 		}
 	}
 });

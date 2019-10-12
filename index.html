@@ -7,19 +7,22 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand mx-auto" href="http://www.thefifthmoon.xyz">Blogs from The Fifth Moon</a>
-	</nav>
 	<!--Vue app mount -->
 	<div id="app">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand mx-auto" href="http://www.thefifthmoon.xyz">Blogs from The Fifth Moon</a>
+			<input class="mr-sm-2 float-right" type="text" placeholder="Search" v-model="inputs.text" />
+			<button class="btn btn-outline-success my-2 my-sm-0 float-right" v-on:click="search()">Search</button>
+		</nav>
 		<div v-if="display_post">
-			<button class="btn btn-link float-right" v-on:click="display_post = false">&#x274C;</button>
+			<button class="btn btn-link float-right" v-on:click="display_post = false; filtered_blogs = blogs; inputs.text = ''">&#x274C;</button>
 		</div> <!--/Cancel Button -->
+
 		<div class="container">
 
 		<div v-if="!display_post">
 
-			<div v-for="(blog, index) in blogs">
+			<div v-for="(blog, index) in filtered_blogs">
 				<div class="row">
 					<div class="col-10">
 						<div class="card">
@@ -58,7 +61,7 @@
 		      <p><span v-html="loaded_blog.body"></span></p>
 
 		      <div id="all_tags"><b>Tags:</b> <span v-for="tag in loaded_blog.tags.split(',')"> 
-		      	<button type="button" class="btn btn-link"><a href="#"> {{tag}}</a></button>     </span> </div>
+		      	<button type="button" class="btn btn-link"><a href="#" v-on:click="loadtag(tag)"> {{tag}}</a></button>     </span> </div>
 
 		      
 		      <b>Contact Me:</b> <button type="button" class="btn btn-link"><a v-bind:href=" 'mailto:robertgarza.cs@gmail.com?subject=Re:' + loaded_blog.title "><img v-bind:src=" base_url + '/static/images/email.png' " width="25px" height="25px" alt="email icon"></a></button> <button type="button" class="btn btn-link"><a target="_blank" rel="noopener noreferrer" href="https://twitter.com/RobertJoJoGarza"><img v-bind:src=" base_url + '/static/images/tweet.png' " width="25px" height="25px" alt="twitter icon"></a></button>
